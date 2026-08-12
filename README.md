@@ -607,5 +607,8 @@ Honest list of what this does **not** do:
 
 ## Licence
 
-No licence file yet — add one before sharing this widely. Without it, default
-copyright applies and others technically cannot reuse it.
+[MIT](LICENSE) — © 2026 Fantahun Fekadu. Fork it, adapt it for your own track,
+ship it. Attribution appreciated but not required.
+
+Note that the licence covers this code only. Whatever wording you put into
+`data/templates.yaml` is your own program's material and carries its own terms.
