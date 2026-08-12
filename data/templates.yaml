@@ -1,0 +1,256 @@
+# =============================================================================
+# GCLP Cloud Cybersecurity — track lead message templates
+#
+# SOURCE STATUS: PLACEHOLDER.
+# These are sensible defaults written to make the agent runnable end-to-end.
+# Replace `body`/`subject` with the official wording from the GCLP Track Lead
+# Handbook. Keep the `key` names — the triage engine maps to them by key.
+# Run `python -m track_lead_agent.cli templates` to list what is loaded.
+#
+# Merge fields available in subject/body:
+#   {first_name} {name} {lead_name} {track} {cohort} {program}
+#   {week} {course_pct} {expected_pct} {pace_gap} {days_silent}
+#   {labs_completed} {skill_badges} {blockers} {wins}
+#   {exam_deadline} {days_to_exam}
+#   {office_hours_link} {checkin_form_link} {community_link}
+# Missing fields render as "—" rather than raising.
+# =============================================================================
+
+defaults:
+  lead_name: "Nebiyu"
+  track: "Cloud Cybersecurity"
+  program: "Google Cloud Career Launchpad"
+  office_hours_link: "<add office hours link>"
+  checkin_form_link: "<add weekly check-in form link>"
+  community_link: "<add Slack/Discord link>"
+
+templates:
+
+  checkin_request:
+    label: "Weekly check-in request"
+    when: "Routine weekly ask, sent to everyone."
+    channel: "slack"
+    tone: "light, low-pressure"
+    subject: "Week {week} check-in — {track}"
+    body: |
+      Hey {first_name}, hope your week went well.
+
+      Quick Week {week} check-in when you get a minute — it takes about
+      two minutes: {checkin_form_link}
+
+      Three things I'm tracking: where you are in the course, anything that
+      has you stuck, and whether you want time with me this week.
+
+      No wrong answers here — "I didn't get to it" is useful information too.
+
+      — {lead_name}, {track} Track Lead
+
+  onboarding_nudge:
+    label: "Never started / no first check-in"
+    when: "Enrolled 10+ days ago with no submission yet."
+    channel: "email"
+    tone: "warm, assume good faith, remove friction"
+    subject: "Getting you started on the {track} track"
+    body: |
+      Hi {first_name},
+
+      I'm {lead_name}, your {track} track lead for {program}. I haven't seen a
+      check-in from you yet, and I wanted to reach out before assuming anything.
+
+      Sometimes it's a busy stretch, sometimes it's an access problem with the
+      lab environment. Either is fixable, and neither is a problem.
+
+      Could you reply with one line telling me which it is? If it's access, I'll
+      get it sorted this week. If it's time, we'll build a plan that fits the
+      hours you actually have.
+
+      — {lead_name}
+
+  gentle_nudge:
+    label: "Slightly behind pace"
+    when: "AMBER tier — drifting, not stuck."
+    channel: "slack"
+    tone: "encouraging, specific, no guilt"
+    subject: "Checking in — Week {week}"
+    body: |
+      Hey {first_name},
+
+      You're at {course_pct}% heading into Week {week}, and the pace target is
+      around {expected_pct}%. That's a gap worth closing now while it's small.
+
+      What tends to work: pick two 90-minute blocks this week and put them in
+      your calendar as if they were meetings. Two focused blocks beat seven
+      guilty intentions.
+
+      Anything in the way I can help with?
+
+      — {lead_name}
+
+  one_on_one_invite:
+    label: "1:1 invite for at-risk scholar"
+    when: "RED tier — significantly behind or gone quiet."
+    channel: "email"
+    tone: "direct, supportive, zero shame"
+    subject: "Can we grab 20 minutes this week?"
+    body: |
+      Hi {first_name},
+
+      I've been looking at where the {track} cohort is, and I'd like to spend
+      20 minutes with you this week. You're at {course_pct}% against a
+      {expected_pct}% target, and I'd rather talk it through than guess.
+
+      This isn't a performance conversation. Most people who fall behind in
+      {program} do it for boring, solvable reasons — work shifts, a lab that
+      won't launch, one confusing module that stalled everything else.
+
+      Grab any slot that works: {office_hours_link}
+      If none of those fit, tell me two times and I'll make one work.
+
+      — {lead_name}, {track} Track Lead
+
+  blocker_support:
+    label: "Responding to a reported blocker"
+    when: "Scholar named something specific that is blocking them."
+    channel: "slack"
+    tone: "practical, fast, concrete"
+    subject: "Re: the thing that's blocking you"
+    body: |
+      Hey {first_name}, thanks for flagging this:
+
+      > {blockers}
+
+      Let's get it unstuck. Two options:
+
+      1. Reply here with a screenshot of what you're seeing and I'll debug it
+         with you async — usually faster than it sounds.
+      2. Bring it to office hours and we'll screen-share: {office_hours_link}
+
+      Don't sit on it for another week. This is exactly what I'm here for.
+
+      — {lead_name}
+
+  reengage_ghost:
+    label: "Re-engagement after no reply"
+    when: "Two or more unanswered messages plus two weeks of silence."
+    channel: "email"
+    tone: "honest, easy to answer, gives an exit"
+    subject: "Still with us?"
+    body: |
+      Hi {first_name},
+
+      I've reached out a couple of times and haven't heard back, so this is my
+      last nudge — I don't want to fill your inbox.
+
+      It'd help me a lot if you replied with a single number:
+
+        1 — Still in, just buried. Check back with me in two weeks.
+        2 — Stuck on something and haven't wanted to say so.
+        3 — Life changed and I need to step away from the program.
+
+      All three are fine answers. Option 3 especially — I'd rather know than
+      wonder, and it frees up a seat for someone on the waitlist.
+
+      — {lead_name}
+
+  exam_deadline_nudge:
+    label: "Exam voucher deadline approaching"
+    when: "Voucher expiring and the exam is not booked."
+    channel: "email"
+    tone: "urgent but calm, action-oriented"
+    subject: "Your exam voucher expires in {days_to_exam} days"
+    body: |
+      Hi {first_name},
+
+      Flagging a hard deadline: your exam voucher expires on {exam_deadline},
+      which is {days_to_exam} days out, and I don't have you down as booked yet.
+
+      Book the slot now even if you don't feel ready. A booked date you can move
+      beats an expired voucher you can't recover. People consistently under-rate
+      themselves here — the exam rewards the lab hours you've already put in.
+
+      Once it's booked, send me the date and I'll build a revision plan with you
+      for the run-up.
+
+      — {lead_name}
+
+  encouragement:
+    label: "Low confidence, on track"
+    when: "Progress is fine but the scholar rates themselves low."
+    channel: "slack"
+    tone: "specific praise, reframe"
+    subject: "You're doing better than you think"
+    body: |
+      Hey {first_name},
+
+      You rated your confidence low this week, but the numbers say something
+      different: {course_pct}% complete, {labs_completed} labs done,
+      {skill_badges} skill badges.
+
+      Cloud security is a domain where feeling lost *is* the job — the people
+      who look confident early are usually the ones who haven't hit the hard
+      parts yet. You're hitting them, which means you're actually in it.
+
+      Keep going. And if there's one specific concept that feels shaky, name it
+      and we'll kill it this week.
+
+      — {lead_name}
+
+  celebrate_milestone:
+    label: "Celebrate a win"
+    when: "Milestone hit — badge, exam passed, big jump."
+    channel: "slack"
+    tone: "genuine, brief, public-ready"
+    subject: "Nice work, {first_name} 🎉"
+    body: |
+      {first_name} — real progress this week:
+
+      > {wins}
+
+      {course_pct}% through the {track} track with {skill_badges} skill badges.
+      That's the compounding part of this program working.
+
+      Mind if I share this with the cohort? Seeing a peer move tends to pull
+      three other people forward.
+
+      — {lead_name}
+
+  cohort_broadcast:
+    label: "Weekly cohort announcement"
+    when: "Start-of-week message to the whole track."
+    channel: "slack"
+    tone: "energetic, clear asks"
+    subject: "{track} — Week {week}"
+    body: |
+      Morning {track} crew — Week {week}.
+
+      **This week's focus:** <add the module/lab focus>
+
+      **Two asks:**
+      1. Weekly check-in (2 min): {checkin_form_link}
+      2. Office hours are open: {office_hours_link}
+
+      **Reminder:** if you're stuck, say so in {community_link} rather than
+      grinding alone. Every question someone asks publicly saves four other
+      people an hour.
+
+      — {lead_name}
+
+  escalation_to_pm:
+    label: "Escalate to program manager"
+    when: "Scholar unresponsive after the full outreach ladder."
+    channel: "email"
+    tone: "factual, concise, no editorialising"
+    subject: "Escalation — {name} ({track}, {cohort})"
+    body: |
+      Hi,
+
+      Escalating {name} ({track}, cohort {cohort}) after exhausting my outreach.
+
+      - Last check-in: Week {week}, {days_silent} days ago
+      - Progress: {course_pct}% against a {expected_pct}% pace target
+      - Outreach: multiple attempts across channels, no reply
+      - Reported blockers: {blockers}
+
+      Requesting guidance on whether to hold the seat or release it.
+
+      — {lead_name}, {track} Track Lead

@@ -1,0 +1,37 @@
+# --- Credentials. Never commit. -------------------------------------------
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.json
+service-account*.json
+client_secret*.json
+
+# --- Real scholar data ------------------------------------------------------
+# Names, emails, and personal notes about real people. Keep this local.
+data/roster.json
+data/*.local.csv
+data/export-*.csv
+
+# --- Python -----------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- ADK runtime ------------------------------------------------------------
+.adk/
+**/.adk/
+*.session.db
+sessions.db
+
+# --- Editors / OS -----------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+*.swp

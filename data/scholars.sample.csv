@@ -1,0 +1,8 @@
+name,email,cohort,lead_id,enrolled_on,exam_deadline,timezone,status,notes
+Sara Tesfaye,sara@example.com,2026-Q3,nebiyu,2026-06-24,2026-10-15,Africa/Addis_Ababa,active,
+Daniel Okoro,daniel@example.com,2026-Q3,nebiyu,2026-06-24,2026-10-15,Africa/Lagos,active,Works night shifts
+Mekdes Alemu,mekdes@example.com,2026-Q3,nebiyu,2026-06-24,2026-10-15,Africa/Addis_Ababa,active,
+Kwame Mensah,kwame@example.com,2026-Q3,nebiyu,2026-06-24,2026-10-15,Africa/Accra,at_risk,
+Liya Bekele,liya@example.com,2026-Q3,nebiyu,2026-06-24,2026-08-26,Africa/Addis_Ababa,active,Voucher expires early
+Tomas Girma,tomas@example.com,2026-Q3,co-lead,2026-06-24,2026-10-15,Africa/Addis_Ababa,active,
+Fatima Nasser,fatima@example.com,2026-Q3,co-lead,2026-06-24,2026-09-11,Africa/Nairobi,active,
